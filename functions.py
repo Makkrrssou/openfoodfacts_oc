@@ -85,18 +85,42 @@ def insert_data(cursor,table,*datas):
            "VALUES {}".format(table,','.join(column),j))
     
 def choose_category(*category):
-    
+
+    verify=1
+
     for cat in category:
         print("Tapez {} pour la catégorie {}".format(cat[0],cat[1][3:]))
 
-    choice=int(input("Rentrez  le numéro de la catégorie que vous souhaitez"))
-    
+    choice=input("Rentrez  le numéro de la catégorie que vous souhaitez")
+
+    while verify==1:
+        try:
+            choice=int(choice)
+            assert choice>=0 and choice<=20
+
+        except ValueError:
+            
+            print("Il faut saisir un chiffre")
+
+            choice=input("Rentrez  le numéro de la catégorie que vous souhaitez")
+
+        except AssertionError:
+
+            print("Les numéros de catégorie doivent être compris"
+                  " entre 0 et 20")
+
+            choice=input("Rentrez  le numéro de la catégorie que vous souhaitez")
+            
+        else:
+            verify=0
 
     return choice
+
 
 def choose_product(cursor,choice):
     cursor.execute("SELECT code_barre,name FROM `products`"
                    "WHERE category_id = {} AND id_substitute= 0 LIMIT 25".format(choice))
+
     results= cursor.fetchall()
 
     for res in results:
@@ -118,15 +142,25 @@ def substitute_product(cursor,product):
     code=product[0]
     reclass=product[4]
     
-    cursor.execute("SELECT code_barre FROM `products`"
+    cursor.execute("SELECT code_barre,name FROM `products`"
                    "WHERE code_barre <> {} AND nutri_reclass<={}"
                    " ORDER BY code_barre LIMIT 1".format(code,reclass))
     
     result=cursor.fetchone()
-    print(result)
-    cursor.execute("UPDATE `products`"
-	       "SET id_substitute = {} WHERE code_barre = {}"
-	       .format(result[0],code))
+    print("Nous vous proposons le résultat suivant: {}".format(result[1]))
+
+    record=int(input("Souhaitez-vous enregistrer ce produit? \n"
+          "Tapez 1 pour oui, 0 pour non"))
+    
+    if record == 1:
+        cursor.execute("UPDATE `products`"
+                   "SET id_substitute = {} WHERE code_barre = {}"
+                   .format(result[0],code))
+        print("Votre demande a bien été prise en compte")
+    else:
+        pass
+
+
 
 def get_substituted_product(cursor,*category):
     choice=choose_category(*category)
