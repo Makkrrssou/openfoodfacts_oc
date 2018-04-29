@@ -1,15 +1,15 @@
 
 
-##category=[(0, 'en:poultries'), (1, 'en:biscuits-and-cakes'), (2,
-##'en:plant-based-foods-and-beverages'), (3, 'en:fruits'), (4,
-##'en:syrups'), (5, 'en:spices'), (6, 'en:fresh-foods'), (7, 'en:bars'),
-##(8, 'en:confectioneries'), (9, 'en:chips-and-fries'), (10,
-##'en:canned-legumes'), (11, 'en:meats'), (12, 'en:coffees'), (13,
-##'en:legumes'), (14, 'en:non-sugared-beverages'), (15, 'en:fresh-meals'),
-##(16, 'en:juices-and-nectars'), (17, 'en:dried-products'), (18,
-##'en:vegetable-oils'), (19, 'en:dairy-desserts'), (20, 'en:meals')]
+category=[(0, 'en:poultries'), (1, 'en:biscuits-and-cakes'), (2,
+'en:meals' ), (3, 'en:fruits'), (4,
+'en:syrups'),(6, 'en:fresh-foods'), (7, 'en:bars'),
+(8, 'en:confectioneries'), (9, 'en:chips-and-fries'), (10,
+'en:canned-legumes'), (11, 'en:meats'), (12, 'en:coffees'), (13,
+'en:legumes'), (14, 'en:non-sugared-beverages'), (15, 'en:fresh-meals'),
+(16, 'en:juices-and-nectars'), (17, 'en:dried-products'), (18,
+'en:vegetable-oils'), (19, 'en:dairy-desserts'), (20,'en:plant-based-foods-and-beverages')]
 
-category=[(5, 'en:spices')]
+##category=[(5, 'en:spices')]
 
 config={
     'user':'root',
