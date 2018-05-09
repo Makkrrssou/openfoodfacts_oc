@@ -17,19 +17,20 @@ create_table(cursor,**tb)
 products = list()
 products_list = retrieve_products(*category)
 products.extend(products_list)
-   
+
 for keys,items in tb.items():
     if keys == 'category':
-        
+
         insert_data(cursor,keys,*category)
         print("les données de la table {} ont été insérées".format(keys))
         cnx.commit()
 
     else:
-        
+
         insert_data(cursor,keys,*products)
         print("les données de la table {} ont été insérées".format(keys))
-       
+        cnx.commit()
+
 
 run = 1
 while run > 0:
@@ -39,16 +40,16 @@ while run > 0:
                       "Sinon tapez sur n'importe quel touche."))
 
     if action == 'n':
-        
-        choice = choose_category(*category)
+
+        choice = choose_category(cursor,*category)
         product = choose_product(cursor,choice)
         substitute_product(cursor,product)
         run = int(input("Si vous voulez continuer tapez 1, sinon tapez 0"))
-            
-                        
+
+
 
     elif action == 'e':
-        
+
         get_substituted_product(cursor,*category)
         run = int(input("Si vous voulez continuer tapez 1, sinon tapez 0"))
 
@@ -56,4 +57,4 @@ while run > 0:
         run = 0
 
 
-print("merci d'être venu")
+print("Merci d'être venu")

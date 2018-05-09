@@ -128,19 +128,21 @@ def insert_data(cursor,table,*datas):
         pass
 
     else:
-        print(" {} a été rajouté".format(data[1].decode("utf-8")))
+        pass
     
-def choose_category(*category):
+def choose_category(cursor,*category):
 
     """Returns the cutommer's choice"""
 
-    verify = 1
+    cursor.execute("SELECT * FROM `category`")
+    result=cursor.fetchall()
 
-    for cat in category:
-        print("Tapez {} pour la catégorie {}".format(cat[0],cat[1][3:]))
+    for res in result:
+        print("Tapez {} pour la catégorie {}".format(res[0],res[1][3:].decode("utf-8")))
 
     choice = input("Rentrez  le numéro de la catégorie que vous souhaitez")
 
+    verify = 1
     while verify == 1:
         try:                                            #Choice must be an integer and between 0 and 20
             choice = int(choice)
@@ -180,7 +182,7 @@ def choose_product(cursor,choice):
     for res in results:
         print(res[0],'  ',res[1].decode("utf-8"))
 
-    chosen_product = input("Rentrez  le code barre de votre choix: ")
+    chosen_product = input("Rentrez  le code barre de votre choix:")
 
     verify = 1
     
@@ -240,7 +242,7 @@ def get_substituted_product(cursor,*category):
 
     """Returns all the substituted products"""
     
-    choice = choose_category(*category)
+    choice = choose_category(cursor,*category)
 
     cursor.execute("SELECT code_barre,name FROM `products`"
                    "WHERE category_id = {} AND id_substitute<> 0"
@@ -254,11 +256,27 @@ def get_substituted_product(cursor,*category):
             
             print(res[0],res[1].decode("utf-8"))
 
-        chosen_product = int(input("Rentrez  le code barre de "
-                                   "votre choix"))
+        chosen_product = input("Rentrez  le code barre de votre choix:")
 
-        cursor.execute("SELECT a.name, b.name,b.url FROM products as a"
-                   "INNER JOIN products b ON a.id_substitute=b.code_barre WHERE a.code_barre={}"
+        verify = 1
+        
+        while verify == 1:
+            try:                                                                                #Choice must be an integer
+                chosen_product = int(chosen_product)
+
+            except ValueError:
+                
+                print("Il faut saisir un chiffre")
+
+                chosen_product=input("Rentrez  le code barre adéquat:")
+
+            else:
+                verify = 0
+
+
+
+
+        cursor.execute("SELECT a.name, b.name,b.url FROM products as a INNER JOIN products b ON a.id_substitute=b.code_barre WHERE a.code_barre={}"
                        .format(chosen_product))
         temp = cursor.fetchall()
         url = temp[0][2]
