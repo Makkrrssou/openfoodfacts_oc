@@ -41,7 +41,7 @@ while run > 0:
 
     if action == 'n':
 
-        choice = choose_category(cursor,*category)
+        choice = choose_category(cursor)
         product = choose_product(cursor,choice)
         substitute_product(cursor,product)
         run = int(input("Si vous voulez continuer tapez 1, sinon tapez 0"))
@@ -50,7 +50,7 @@ while run > 0:
 
     elif action == 'e':
 
-        get_substituted_product(cursor,*category)
+        get_substituted_product(cursor)
         run = int(input("Si vous voulez continuer tapez 1, sinon tapez 0"))
 
     else:

@@ -130,7 +130,7 @@ def insert_data(cursor,table,*datas):
     else:
         pass
     
-def choose_category(cursor,*category):
+def choose_category(cursor):
 
     """Returns the cutommer's choice"""
 
@@ -238,11 +238,11 @@ def substitute_product(cursor,product):
 
 
 
-def get_substituted_product(cursor,*category):
+def get_substituted_product(cursor):
 
     """Returns all the substituted products"""
     
-    choice = choose_category(cursor,*category)
+    choice = choose_category(cursor)
 
     cursor.execute("SELECT code_barre,name FROM `products`"
                    "WHERE category_id = {} AND id_substitute<> 0"
